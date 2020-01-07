@@ -288,7 +288,7 @@ while(y < length(enrichment_input)+1){
 #Now we actually have to annotate this data. The first step is to find Arabidopsis homologs. Thankfully, a list of TAIR homologs for Ha412 genes already exists! We'll read it in and find matches:
 
 setwd(genome_files)
-Imp_Arab <- read.csv("Imp_Arab.csv") #arabidopsis homolgs to 412 genes
+Imp_Arab <- read.csv("Ha412_to_Arabidopsis.csv") #arabidopsis homolgs to 412 genes
 colnames(Imp_Arab)[2] <- "gene"
 Imp_Arab <- Imp_Arab[c(2:4)]
 
