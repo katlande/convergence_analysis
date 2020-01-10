@@ -27,7 +27,7 @@ raw_data_dir <- paste("~/Desktop/Convergence_Paper/",Test,"/Raw_Data/",Condition
 setwd(raw_data_dir)
 raw_data <- list.files(path=raw_data_dir)#whenever using the list.file() command, make sure the path contains ONLY the fils/directories you want included in the list it create (this command makes a list of all the species comparisons, as the path contains 6 folders names for each species comparison).
 
-#The first step is to take all the hits for individual variables and condense them into a single file. If  you already have all the hits for a comparison condensed into a single file, you can skip to Section 2.
+#The first step is to take all the hits for individual variables and condense them into a single file. If  you already have all the hits for a comparison condensed into a single file, you can skip to Section 1.5.
 
 #We will do this in a loop for each file:
 r = 1
@@ -62,6 +62,34 @@ while(r<length(raw_data)+1){
   write.table(all_data, temp_output_name, row.names = F, quote = F, sep = "\t")#write a text file of the full data for each comparison. We will use it in the next steps.
   r = r + 1#repeat the main loop for all subdirectories in the raw_data directory
 }#You should now have one file per comparison in you main raw_data directory.
+
+#### SECTION 1.5 ####
+#This section is ONLY USED if you are starting with Null W tables that contain every variable, rather than individual Null W tables for each variable. If you ran all of section 1.0, skip to section 2.
+
+#raw_data_dir <- paste("~/Desktop/Convergence_Paper/",Test,"/Raw_Data/",Condition,sep="")
+#setwd(raw_data_dir)
+#files <- list.files(path=raw_data_dir, pattern = ".txt")
+#The next two lines change depending on your file names. I am pull the name of the comparison out of the file names. My input files are in the following format:
+#"Test_Condition_Comparison.txt"
+#remove1 and remove2 are the strings I have to remove from my file name to be left with ONLY the comparison name:
+#remove1 <- paste(Test,"_",Condition,"_",sep="")
+#remove2 <- paste(".txt")
+
+#t = 1
+#while(t < length(files)+1){#we'll us a nested loop her to bind all the files in the subdirectory into a single dataframe
+#  temp <- read.table(files[t], header = T)#read each file as a temporary data frame
+#  temp <- temp[c(1,3,4)]#select the window, the p value, and the variable columns only
+#  colnams <- c("Variable", "Window", "p_Val")
+#  colnames(temp) <- colnams
+#  temp$Test <- Test#add a test column
+#  temp$Comparison <- files[t]#the comparison column is the file name.
+#  temp$Comparison<-gsub(remove1,"",as.character(temp$Comparison),n)#remove the strings remove1 and remove2 from the cells in the comparison column
+#  temp$Comparison<-gsub(remove2,"",as.character(temp$Comparison),n)
+#  t = t + 1#repeat the nested loop for all files in the subdirectory
+#  out_name <- paste(Test, "_", Condition, "_", temp$Comparison[1], ".txt", sep="")#chose an output name
+#  write.table(temp, out_name, row.names = F, quote = F, sep = "\t")#write a table to use in section 2 for each species comparison
+#}
+
 
 #########################################################################################
 ############################# Section 2:  Tissue Enrichment #############################
